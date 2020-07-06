@@ -1,0 +1,45 @@
+
+#输出结果能够找到重合部分
+def find_coincide_item_by_time(items: list):
+    new_items = sorted(items, key=lambda x: x["start_time"])
+    last_item = None
+    min_time = 0
+    max_time = 0
+    coincide_item = []
+    for item in new_items:
+        start_time = item["start_time"]
+        end_time = item["end_time"]
+        if new_items.index(item) == 0:
+            min_time = start_time
+            max_time = end_time
+            last_item = item
+
+        if min_time < start_time < max_time:
+            coincide_item.append(item)
+            if last_item:
+                coincide_item.append(last_item)
+                last_item = None
+            if end_time > max_time:
+                max_time = end_time
+            continue
+
+        if start_time > min_time:
+            min_time = start_time
+            max_time = end_time
+            last_item = item
+            continue
+    print(coincide_item)
+
+
+if __name__ == '__main__':
+    a = [{"start_time": 3, "end_time": 5}, {"start_time": 2, "end_time": 4}, {"start_time": 1, "end_time": 1.5},
+         {"start_time": 6, "end_time": 8}, {"start_time": 7, "end_time": 9}]
+    find_coincide_item_by_time(a)
+
+
+
+
+
+
+
+
